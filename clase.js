@@ -55,6 +55,18 @@ export default class Contenedor {
         }
     }
 
+    async getRandom() {
+        try {
+            let json = JSON.parse(await this.#accessFile())
+            let randomProducto = json[Math.floor(Math.random() * json.length)]
+            if (randomProducto) return randomProducto
+            else return null
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }
+
     async getAll() {
         try {
             return JSON.parse(await this.#accessFile())
