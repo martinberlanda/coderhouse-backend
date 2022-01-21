@@ -1,35 +1,20 @@
-import express from 'express';
-import Contenedor from './clase.js';
-const PORT = 8080;
+import express from "express";
+import morgan from "morgan";
+import bodyParser from "body-parser";
+import productos from "./routes/products.route.js";
 
+/* Instancia de express */
 const app = express();
 
-let contenedor = new Contenedor('productos.txt');
+/* Middlewares */
+app.use(morgan("tiny"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use("/api/productos", productos);
 
-app.get('/productos', async (req, res) => {
-    let msg = {
-        status: 'OK',
-        message: 'Get All Products',
-        code: 200,
-        data: await contenedor.getAll()
-    }
-
-    res.end(JSON.stringify(msg));
-});
-
-app.get('/productoRandom', async (req, res) => {
-    let msg = {
-        status: 'OK',
-        message: 'Get Random Product',
-        code: 200, 
-        data: await contenedor.getRandom()
-    }
-    res.end(JSON.stringify(msg));
-})
-
-
+/* Servidor */
+const PORT = 8080;
 const server = app.listen(PORT, () => {
-    console.log(`Server is listening on port ${server.address().port}`);
-})
-
-server.on('error', error => console.log(error))
+  console.log(`Server is listening on port ${server.address().port}`);
+});
+server.on("error", (error) => console.error(error));

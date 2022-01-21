@@ -1,6 +1,6 @@
-import Contenedor from './clase.js'
+import Contenedor from "./contenedor.js";
 
-let contenedor = new Contenedor('productos.txt')
+let contenedor = new Contenedor("productos.txt");
 
 // Ejemplo de Save
 /* const productoAGuardar = { title: "Zapatillas", price: 342.23, thumbnail: 'https://www.google.com' }
@@ -9,7 +9,7 @@ console.log(await contenedor.save(productoAGuardar)) */
 //Ejemplo de deleteAll
 /* contenedor.deleteAll() */
 
-//Ejemplo de getById 
+//Ejemplo de getById
 /* console.log(await contenedor.getById(6)) */
 
 //Ejemplo de getAll
