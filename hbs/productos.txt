@@ -1,1 +1,1 @@
-[]
+[{"title":"Zapatillas","price":"536","thumbnail":"https://cdn1.iconfinder.com/data/icons/skate-1/512/shoes-sneaker-shoe-footwear-fashion-256.png","id":1},{"title":"Zapatilla secundaria","price":"1000","thumbnail":"https://cdn1.iconfinder.com/data/icons/skate-1/512/shoes-sneaker-shoe-footwear-fashion-256.png","id":2},{"title":"Remera","price":"500","thumbnail":"https://cdn-icons-png.flaticon.com/512/2503/2503376.png","id":3}]

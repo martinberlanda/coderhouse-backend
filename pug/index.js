@@ -3,14 +3,33 @@ import morgan from "morgan";
 import bodyParser from "body-parser";
 import productos from "./routes/products.route.js";
 
+import Contenedor from "./contenedor.js";
+
+let contenedor = new Contenedor("productos.txt");
+
 /* Instancia de express */
 const app = express();
 
 /* Middlewares */
 app.use(morgan("tiny"));
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+
 app.use("/api/productos", productos);
+
+/* Motor de plantillas */
+app.set("views", "./views");
+app.set("view engine", "pug");
+
+/* Rutas */
+app.get("/", (req, res) => {
+  res.render("formulario.pug");
+});
+
+app.get("/productos", async (req, res) => {
+  let products = await contenedor.getAll();
+  res.render("productos.pug", { products });
+});
 
 /* Servidor */
 const PORT = 8080;
