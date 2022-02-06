@@ -1,0 +1,55 @@
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/main.js"></script>
+
+<h1>Ingrese los datos del producto</h1>
+<br />
+<form onsubmit="return sendProduct()">
+  <div class="form-group">
+    <label for="title"><b>Titulo</b></label>
+    <input id="title" class="form-control" type="text" name="title" />
+  </div>
+  <div class="form-group">
+    <label for="price"><b>Precio</b></label>
+    <input id="price" class="form-control" type="number" name="price" />
+  </div>
+  <div class="form-group">
+    <label for="thumbnail"><b>Enlace a la Miniatura</b></label>
+    <input id="thumbnail" class="form-control" type="text" name="thumbnail" />
+  </div>
+
+  <div>
+    <button class="btn btn-success mt-3 mb-5">Enviar</button>
+    <a href="productos/" class="btn btn-primary mt-3 mb-5">Ver productos</a>
+  </div>
+</form>
+
+<div class="table-responsive">
+  <table class="table table-dark" id="productContainer">
+    <tr style="color: yellow">
+      <th>Titulo</th>
+      <th>Precio</th>
+      <th>Miniatura</th>
+    </tr>
+  </table>
+</div>
+
+<div class="container mt-1">
+  <div class="jumbotron">
+    <h1>Centro de Mensajes</h1>
+    <div>
+      <div
+        id="msgsContainer"
+        class="m-1 p-2"
+        style="background-color: white; min-height: 50px; display: flex; flex-direction: column;" 
+      ></div>
+
+      <div>
+        <form onsubmit="return sendMessage()">
+          <input id="msg" type="text" placeholder="Mensaje" />
+          <input id="email" type="text" placeholder="E-mail" />
+          <button>Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

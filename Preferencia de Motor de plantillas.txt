@@ -1,8 +1,0 @@
-Tras realizar el mismo ejercicio con los tres motores, mi favorito es EJS
-
-Permite mechar Javascript entre las etiquetas de HTML, lo que hace que codigo HTML ya existente pueda ser facilmente adaptado
-No hay que aprender casi nada nuevo, ya que todo lo escrito dentro de las etiquetas es Javascript clasico
-
-El cambio, Pug exije que se use su espaciado, las propiedades se le pasan a las etiquetas de forma distinta, termina siendo un archivo totalmente distinto a un HTML clasico
-
-Handlebars me gusto mucho tambien, encuentro mas similitudes entre HBS y EJS que diferencias, EJS me gusta más por el simple hecho de poder usar brackets para cerrar los bloques de código
