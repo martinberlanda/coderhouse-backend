@@ -2,10 +2,10 @@ import express from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import productos from "./routes/products.route.js";
-import exphbs from "express-handlebars";
 import Contenedor from "./classes/contenedor.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import 'dotenv/config';
 
 let contenedor = new Contenedor("productos.txt");
 
@@ -55,8 +55,7 @@ app.get("/productos", async (req, res) => {
 });
 
 /* Servidor */
-const PORT = 8080;
-const server = httpServer.listen(PORT, () => {
+const server = httpServer.listen(process.env.PORT, () => {
   console.log(`Server is listening on port ${server.address().port}`);
 });
 server.on("error", (error) => console.error(error));
