@@ -1,2 +1,4 @@
 node_modules
 productos.txt
+dist/
+build/

@@ -22,7 +22,7 @@ app.use(express.static("public"));
 app.use("/api/productos", productos);
 
 /* Conf. Motor de plantillas */
-app.set("views", "./views");
+app.set("views", "src/views");
 app.set("view engine", "ejs");
 
 /* Socket */
