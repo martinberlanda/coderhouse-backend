@@ -1,13 +1,15 @@
 import express from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
-import productos from "./routes/products.route.js";
-import Contenedor from "./classes/contenedor.js";
+import products from "./routes/products.route.js";
+import shoppingCart from "./routes/shopping-cart.route.js";
+import Products from "./classes/products.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import 'dotenv/config';
+import "dotenv/config";
+import cors from "cors";
 
-let contenedor = new Contenedor("productos.txt");
+let contenedor = new Products();
 
 /* Instancia de express */
 const app = express();
@@ -15,43 +17,19 @@ const httpServer = createServer(app);
 const io = new Server(httpServer);
 
 /* Middlewares */
+app.use(cors({ origin: "http://localhost:4000" }));
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.use("/api/productos", productos);
+app.use("/api/productos", products);
+app.use("/api/carrito", shoppingCart);
 
-/* Conf. Motor de plantillas */
-app.set("views", "src/views");
-app.set("view engine", "ejs");
-
-/* Socket */
-let msgs = [];
-io.on("connection", async (socket) => {
-  console.log(`Nuevo cliente conectado: ${socket.id}`);
-
-  socket.emit("products", await contenedor.getAll());
-  socket.emit("msgs", msgs);
-
-  socket.on("newMsg", async (data) => {
-    msgs.push(data);
-    io.sockets.emit("msgs", msgs);
+app.use(function (req, res) {
+  res.json({
+    error: -2,
+    description: "ruta no implementada",
   });
-
-  socket.on("newProduct", async (data) => {
-    await contenedor.save(data)
-    io.sockets.emit("products", await contenedor.getAll());
-  });
-});
-
-/* Rutas */
-app.get("/", async (req, res) => {
-  res.render("formulario");
-});
-
-app.get("/productos", async (req, res) => {
-  let products = await contenedor.getAll();
-  res.render("productos", { products });
 });
 
 /* Servidor */

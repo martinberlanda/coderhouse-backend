@@ -1,27 +1,53 @@
 import express from "express";
-import Contenedor from "../classes/contenedor.js";
+import Products from "../classes/products.js";
 
-const productos = express.Router();
+const products = express.Router();
 
-let contenedor = new Contenedor("productos.txt");
+const contenedor = new Products();
 
-productos.get("/", async (req, res) => {
+products.get("/", async (req, res) => {
   res.status(200).json(await contenedor.getAll());
 });
 
-productos.get("/:id", async (req, res) => {
+products.get("/:id", async (req, res) => {
   let id = parseInt(req.params.id);
   res.status(200).json(await contenedor.getById(id));
 });
 
-productos.post("/", async (req, res) => {
-  let product = req.body;
-  res.status(200).json(await contenedor.save(product));
+products.post("/", async (req, res) => {
+  if (req.headers.administrador === "true") {
+    let product = req.body;
+    res.status(200).json(await contenedor.newProduct(product));
+  } else {
+    res.status(401).json({
+      error: -1,
+      description: "ruta 'productos/' método 'POST' no autorizada",
+    });
+  }
 });
 
-productos.delete("/:id", async (req, res) => {
+products.post("/:id", async (req, res) => {
+  if (req.headers.administrador == "true") {
+    let id = parseInt(req.params.id);
+    let product = req.body;
+    res.status(200).json(await contenedor.saveProduct(id, product));
+  } else {
+    res.status(401).json({
+      error: -1,
+      description: "ruta 'productos/id' método 'POST' no autorizada",
+    });
+  }
+});
+
+products.delete("/:id", async (req, res) => {
+  if (req.headers.administrador === "true") {
     let id = parseInt(req.params.id);
     res.status(200).json(await contenedor.deleteById(id));
-  });
+  } else
+    res.status(401).json({
+      error: -1,
+      description: "ruta 'productos/id' método 'DELETE' no autorizada",
+    });
+});
 
-export default productos;
+export default products;
