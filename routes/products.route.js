@@ -1,11 +1,13 @@
 import express from "express";
-import Contenedor from "../classes/contenedor.js";
+import Products from "../classes/products.js";
 
 const productos = express.Router();
 
-let contenedor = new Contenedor("productos.txt");
+let contenedor = new Products();
 
 productos.get("/", async (req, res) => {
+  console.log("aca anda")
+  console.log(await contenedor.getAll())
   res.status(200).json(await contenedor.getAll());
 });
 

@@ -2,12 +2,13 @@ import express from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import productos from "./routes/products.route.js";
-import exphbs from "express-handlebars";
-import Contenedor from "./classes/contenedor.js";
+import Products from "./classes/products.js";
+import Messages from "./classes/messages.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-let contenedor = new Contenedor("productos.txt");
+let productContainer = new Products();
+let messagessContainer = new Messages();
 
 /* Instancia de express */
 const app = express();
@@ -29,18 +30,22 @@ app.set("view engine", "ejs");
 let msgs = [];
 io.on("connection", async (socket) => {
   console.log(`Nuevo cliente conectado: ${socket.id}`);
-
-  socket.emit("products", await contenedor.getAll());
-  socket.emit("msgs", msgs);
+  socket.emit("products", await productContainer.getAll());
+  socket.emit("msgs", await messagessContainer.getAll());
 
   socket.on("newMsg", async (data) => {
-    msgs.push(data);
-    io.sockets.emit("msgs", msgs);
+    await messagessContainer.save(data);
+    io.sockets.emit("msgs", await messagessContainer.getAll());
   });
 
   socket.on("newProduct", async (data) => {
-    await contenedor.save(data)
-    io.sockets.emit("products", await contenedor.getAll());
+    await productContainer.save(data);
+    io.sockets.emit("products", await productContainer.getAll());
+  });
+
+  socket.on("disconnect", () => {
+    socket.disconnect();
+    console.log("Client disconnected");
   });
 });
 
@@ -50,7 +55,7 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/productos", async (req, res) => {
-  let products = await contenedor.getAll();
+  let products = await productContainer.getAll();
   res.render("productos", { products });
 });
 

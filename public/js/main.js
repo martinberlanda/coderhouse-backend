@@ -33,23 +33,25 @@ function sendMessage() {
 socket.on("msgs", (msgs) => {
   let msgsHthml = "";
 
-  msgs.forEach((msg) => {
-    msgsHthml += `
+  if (msgs) {
+    msgs.forEach((msg) => {
+      msgsHthml += `
     <div style="display: flex;">
       <p style="font-weight: bold; color: blue; padding: 2px;">${msg.email}</p>
       <p style="color: brown; padding: 2px;">[${msg.date}]</p>
       <p style="font-style: italic; color: green; padding: 2px;">${msg.msg}</p>
     </div>`;
-  });
-
+    });
+  }
   document.getElementById("msgsContainer").innerHTML = msgsHthml;
 });
 
 socket.on("products", (products) => {
   let contProductHtml = "";
-
-  products.forEach((product) => {
-    contProductHtml += `
+  console.log(products);
+  if (products) {
+    products.forEach((product) => {
+      contProductHtml += `
     <tr>
         <td>${product.title}</td>
         <td>${product.price}</td>
@@ -57,7 +59,8 @@ socket.on("products", (products) => {
             <img src="${product.thumbnail}" width="60px" height="60px" />
         </td>
     </tr>`;
-  });
+    });
+  }
 
   document.getElementById("productContainer").innerHTML = contProductHtml;
 });
