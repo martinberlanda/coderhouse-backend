@@ -1,30 +1,14 @@
-import fs from "fs";
+import FileContainer from "../../containers/FileContainer.js";
+import fileSystem from "fs";
 
-export default class ShoppingCart {
-  constructor(nameFile = "shopping-cart.txt") {
-    this.nameFile = nameFile;
-  }
-
-  async #accessFile() {
-    return new Promise((resolve, reject) => {
-      fs.readFile(this.nameFile, "utf8", (err, data) => {
-        if (err) {
-          try {
-            fs.writeFileSync(this.nameFile, "[]");
-            console.log("Archivo no encontrado, se creará uno nuevo");
-            resolve(this.#accessFile()); // Recursividad
-          } catch (error) {
-            console.error(error);
-            reject(error);
-          }
-        } else resolve(data);
-      });
-    });
+export default class CarritoDaoArchivo extends FileContainer {
+  constructor() {
+    super("shopping-cart.txt");
   }
 
   async newShoppingCart() {
     try {
-      let existingShoppingCarts = JSON.parse(await this.#accessFile());
+      let existingShoppingCarts = JSON.parse(await this.accessFile());
       let newShoppingCartID;
       if (existingShoppingCarts.length === 0) newShoppingCartID = 1;
       else {
@@ -34,11 +18,11 @@ export default class ShoppingCart {
       let newShoppingCart = {
         products: [],
         id: newShoppingCartID,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
       existingShoppingCarts.push(newShoppingCart);
-      fs.writeFileSync(
-        this.nameFile,
+      fileSystem.writeFileSync(
+        this.fileName,
         JSON.stringify(existingShoppingCarts),
         (error) => {
           if (error) throw new Error(error);
@@ -52,7 +36,7 @@ export default class ShoppingCart {
 
   async addProduct(id, product) {
     try {
-      let existingShoppingCarts = JSON.parse(await this.#accessFile());
+      let existingShoppingCarts = JSON.parse(await this.accessFile());
 
       let shoppingCart = existingShoppingCarts.find(
         (shoppingCart) => shoppingCart.id === id
@@ -76,8 +60,8 @@ export default class ShoppingCart {
 
       existingShoppingCarts[id === shoppingCart.id] = shoppingCart;
 
-      fs.writeFileSync(
-        this.nameFile,
+      fileSystem.writeFileSync(
+        this.fileName,
         JSON.stringify(existingShoppingCarts),
         (error) => {
           if (error) throw new Error(error);
@@ -91,7 +75,7 @@ export default class ShoppingCart {
 
   async deleteProductById(id, productId) {
     try {
-      let existingShoppingCarts = JSON.parse(await this.#accessFile());
+      let existingShoppingCarts = JSON.parse(await this.accessFile());
 
       let shoppingCart = existingShoppingCarts.find(
         (shoppingCart) => shoppingCart.id === id
@@ -109,8 +93,8 @@ export default class ShoppingCart {
 
       existingShoppingCarts[id === shoppingCart.id] = shoppingCart;
 
-      fs.writeFileSync(
-        this.nameFile,
+      fileSystem.writeFileSync(
+        this.fileName,
         JSON.stringify(existingShoppingCarts),
         (error) => {
           if (error) throw new Error(error);
@@ -124,7 +108,7 @@ export default class ShoppingCart {
 
   async getProductsById(id) {
     try {
-      let existingShoppingCarts = JSON.parse(await this.#accessFile());
+      let existingShoppingCarts = JSON.parse(await this.accessFile());
       let shoppingCart = existingShoppingCarts.find(
         (shoppingCart) => shoppingCart.id === id
       );
@@ -133,32 +117,6 @@ export default class ShoppingCart {
         return {
           error: "No se encontraron productos en el carrito con id: " + id,
         };
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async getAll() {
-    try {
-      return JSON.parse(await this.#accessFile());
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async deleteById(id) {
-    try {
-      let existingShoppingCarts = JSON.parse(await this.#accessFile());
-      let index = existingShoppingCarts.findIndex((cart) => cart.id === id);
-      existingShoppingCarts.splice(index, 1);
-      fs.writeFileSync(
-        this.nameFile,
-        JSON.stringify(existingShoppingCarts),
-        (error) => {
-          if (error) throw new Error(error);
-          console.log("Se eliminó el carrito con id: " + id);
-        }
-      );
     } catch (error) {
       console.error(error);
     }
