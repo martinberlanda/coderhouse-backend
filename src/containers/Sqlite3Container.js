@@ -1,13 +1,13 @@
-import options from "../utils/options.js";
+import { optionsSqlite3 } from "../utils/options.js";
 import Knex from "knex";
 
 export default class Sqlite3Container {
-    constructor(table) {
-        this.table = table;
-      }
+  constructor(table) {
+    this.table = table;
+  }
 
   async createOne(item) {
-    const knex = Knex(options.optionsSqlite3);
+    const knex = Knex(optionsSqlite3);
     let id = await knex(table)
       .insert(item)
       .catch((error) => {
@@ -20,8 +20,21 @@ export default class Sqlite3Container {
     return { ...item, id };
   }
 
+  async updateOne(id, item) {
+    const knex = Knex(optionsSqlite3);
+    await knex(table)
+      .where("id", id)
+      .update(item)
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        knex.destroy();
+      });
+  }
+
   async findOne(id) {
-    const knex = Knex(options.optionsSqlite3);
+    const knex = Knex(optionsSqlite3);
     const item = await knex
       .from(table)
       .select("*")
@@ -37,7 +50,7 @@ export default class Sqlite3Container {
   }
 
   async findAll() {
-    const knex = Knex(options.optionsSqlite3);
+    const knex = Knex(optionsSqlite3);
     const items = await knex
       .from(table)
       .select("*")
@@ -52,7 +65,7 @@ export default class Sqlite3Container {
   }
 
   async deleteAll() {
-    const knex = Knex(options.optionsSqlite3);
+    const knex = Knex(optionsSqlite3);
     await knex
       .from(table)
       .del()
@@ -65,7 +78,7 @@ export default class Sqlite3Container {
   }
 
   async deleteOne(id) {
-    const knex = Knex(options.optionsSqlite3);
+    const knex = Knex(optionsSqlite3);
     await knex
       .from(table)
       .where("id", id)

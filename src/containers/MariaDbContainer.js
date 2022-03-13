@@ -1,13 +1,13 @@
-import options from "../utils/options.js";
+import { optionsMariaDb } from "../utils/options.js";
 import Knex from "knex";
 
 export default class MariaDbContainer {
-    constructor(table) {
-        this.table = table;
-      }
+  constructor(table) {
+    this.table = table;
+  }
 
   async createOne(item) {
-    const knex = Knex(options.optionsMariaDb);
+    const knex = Knex(optionsMariaDb);
     let id = await knex(table)
       .insert(item)
       .catch((error) => {
@@ -20,8 +20,21 @@ export default class MariaDbContainer {
     return { ...item, id };
   }
 
+  async updateOne(id, item) {
+    const knex = Knex(optionsSqlite3);
+    await knex(table)
+      .where("id", id)
+      .update(item)
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        knex.destroy();
+      });
+  }
+
   async findOne(id) {
-    const knex = Knex(options.optionsMariaDb);
+    const knex = Knex(optionsMariaDb);
     const item = await knex
       .from(table)
       .select("*")
@@ -37,7 +50,7 @@ export default class MariaDbContainer {
   }
 
   async findAll() {
-    const knex = Knex(options.optionsMariaDb);
+    const knex = Knex(optionsMariaDb);
     const items = await knex
       .from(table)
       .select("*")
@@ -52,7 +65,7 @@ export default class MariaDbContainer {
   }
 
   async deleteAll() {
-    const knex = Knex(options.optionsMariaDb);
+    const knex = Knex(optionsMariaDb);
     await knex
       .from(table)
       .del()
@@ -65,7 +78,7 @@ export default class MariaDbContainer {
   }
 
   async deleteOne(id) {
-    const knex = Knex(options.optionsMariaDb);
+    const knex = Knex(optionsMariaDb);
     await knex
       .from(table)
       .where("id", id)

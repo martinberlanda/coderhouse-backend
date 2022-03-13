@@ -60,14 +60,17 @@ export default class FileContainer {
       let itemExist = existingItems.find((item) => item.id === id);
       if (!itemExist)
         return { error: "The next id didn't match any object: " + id };
-    
-      const index = existingItems.findIndex((item) => item.id === id);
-      existingItems[index] = {...item, id, timestamp: Date.now()};
 
-      fileSystem.writeFileSync(this.fileName, JSON.stringify(existingItems), (error) => {
-        if (error) throw new Error(error);
-      });
-      return item;
+      const index = existingItems.findIndex((item) => item.id === id);
+      existingItems[index] = { ...item, id, timestamp: Date.now() };
+
+      fileSystem.writeFileSync(
+        this.fileName,
+        JSON.stringify(existingItems),
+        (error) => {
+          if (error) throw new Error(error);
+        }
+      );
     } catch (error) {
       console.error(error);
     }
@@ -96,9 +99,13 @@ export default class FileContainer {
       let existingItems = JSON.parse(await this.accessFile());
       let index = existingItems.findIndex((item) => item.id === id);
       existingItems.splice(index, 1);
-      fileSystem.writeFileSync(this.fileName, JSON.stringify(existingItems), (error) => {
-        if (error) throw new Error(error);
-      });
+      fileSystem.writeFileSync(
+        this.fileName,
+        JSON.stringify(existingItems),
+        (error) => {
+          if (error) throw new Error(error);
+        }
+      );
     } catch (error) {
       console.error(error);
     }

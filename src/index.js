@@ -1,13 +1,12 @@
 import express from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
-
+import "dotenv/config";
 import productsRoute from "./routes/products.route.js";
 import shoppingCartRoute from "./routes/shopping-cart.route.js";
 
 import { createServer } from "http";
 import { Server } from "socket.io";
-import "dotenv/config";
 import cors from "cors";
 
 /* Instancia de express */
@@ -20,7 +19,7 @@ app.use(cors({ origin: "http://localhost:4000" }));
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
+//app.use(express.static("public"));
 app.use("/api/productos", productsRoute);
 app.use("/api/carrito", shoppingCartRoute);
 

@@ -1,20 +1,12 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
+import { ProductSchema } from "./Product.model.js";
 
-const shoppingCartSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-  },
-  msg: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: String,
-    required: true,
-  },
+export const ShoppingCartSchema = new mongoose.Schema({
+  timestamp: String,
+  products: [ProductSchema],
 });
 
-const ShoppingCartModel = model("shopping-carts", shoppingCartSchema);
-
-export default ShoppingCartModel;
+export const ShoppingCartModel = mongoose.model(
+  "shopping-carts",
+  ShoppingCartSchema
+);
