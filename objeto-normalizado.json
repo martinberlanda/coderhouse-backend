@@ -1,0 +1,134 @@
+{
+    "entities": {
+        "user": {
+            "mdelmar@gmail.com": {
+                "name": "Maria",
+                "lastname": "Del Mar",
+                "age": 28,
+                "email": "mdelmar@gmail.com",
+                "avatar": "96",
+                "alias": "MdelMar"
+            },
+            "fulano@gmail.com": {
+                "name": "Fulano",
+                "lastname": "Del Mar",
+                "age": 54,
+                "email": "fulano@gmail.com",
+                "avatar": "fulano",
+                "alias": "fulano"
+            }
+        },
+        "message": {
+            "623d0b19fdd450f281fdd91b": {
+                "_id": "623d0b19fdd450f281fdd91b",
+                "text": "123 123",
+                "author": "mdelmar@gmail.com"
+            },
+            "623d0b1cfdd450f281fdd91d": {
+                "_id": "623d0b1cfdd450f281fdd91d",
+                "text": "13123123",
+                "author": "mdelmar@gmail.com"
+            },
+            "623d0b1ffdd450f281fdd91f": {
+                "_id": "623d0b1ffdd450f281fdd91f",
+                "text": "5555",
+                "author": "mdelmar@gmail.com"
+            },
+            "623d0b22fdd450f281fdd921": {
+                "_id": "623d0b22fdd450f281fdd921",
+                "text": "6455425",
+                "author": "mdelmar@gmail.com"
+            },
+            "623d0b4bfdd450f281fdd923": {
+                "_id": "623d0b4bfdd450f281fdd923",
+                "text": "6455425",
+                "author": "fulano@gmail.com"
+            },
+            "623d0b5afdd450f281fdd925": {
+                "_id": "623d0b5afdd450f281fdd925",
+                "text": "Probando",
+                "author": "fulano@gmail.com"
+            },
+            "623d184a98554066fe69b313": {
+                "_id": "623d184a98554066fe69b313",
+                "author": "fulano@gmail.com",
+                "text": "Otra prueba"
+            },
+            "6240e0cb94850cd4f54cd44d": {
+                "_id": "6240e0cb94850cd4f54cd44d",
+                "text": "asdsadsaddsa",
+                "author": "fulano@gmail.com"
+            },
+            "6240e0ce94850cd4f54cd44f": {
+                "_id": "6240e0ce94850cd4f54cd44f",
+                "text": "54646848",
+                "author": "fulano@gmail.com"
+            },
+            "6240e0d194850cd4f54cd451": {
+                "_id": "6240e0d194850cd4f54cd451",
+                "text": "42134314",
+                "author": "fulano@gmail.com"
+            },
+            "6240e0d494850cd4f54cd453": {
+                "_id": "6240e0d494850cd4f54cd453",
+                "text": "SA SSAD",
+                "author": "fulano@gmail.com"
+            },
+            "6240e0da94850cd4f54cd455": {
+                "_id": "6240e0da94850cd4f54cd455",
+                "text": "42343235",
+                "author": "fulano@gmail.com"
+            },
+            "6240e15761382391c6399b50": {
+                "_id": "6240e15761382391c6399b50",
+                "text": "55555555555555555",
+                "author": "fulano@gmail.com"
+            },
+            "6240e15961382391c6399b52": {
+                "_id": "6240e15961382391c6399b52",
+                "text": "1",
+                "author": "fulano@gmail.com"
+            },
+            "6240e15b61382391c6399b54": {
+                "_id": "6240e15b61382391c6399b54",
+                "text": "3",
+                "author": "fulano@gmail.com"
+            },
+            "6240e15e61382391c6399b56": {
+                "_id": "6240e15e61382391c6399b56",
+                "text": "5",
+                "author": "fulano@gmail.com"
+            },
+            "6240e16061382391c6399b58": {
+                "_id": "6240e16061382391c6399b58",
+                "text": "7",
+                "author": "fulano@gmail.com"
+            },
+            "6240e16361382391c6399b5a": {
+                "_id": "6240e16361382391c6399b5a",
+                "test": "9",
+                "author": "fulano@gmail.com"
+            }
+        }
+    },
+    "result": [
+        "623d0b19fdd450f281fdd91b",
+        "623d0b1cfdd450f281fdd91d",
+        "623d0b1ffdd450f281fdd91f",
+        "623d0b22fdd450f281fdd921",
+        "623d0b4bfdd450f281fdd923",
+        "623d0b5afdd450f281fdd925",
+        "623d184a98554066fe69b313",
+        "6240e0cb94850cd4f54cd44d",
+        "6240e0ce94850cd4f54cd44f",
+        "6240e0d194850cd4f54cd451",
+        "6240e0d494850cd4f54cd453",
+        "6240e0da94850cd4f54cd455",
+        "6240e15761382391c6399b50",
+        "6240e15961382391c6399b52",
+        "6240e15b61382391c6399b54",
+        "6240e15e61382391c6399b56",
+        "6240e16061382391c6399b58",
+        "6240e16361382391c6399b5a"
+    ]
+}

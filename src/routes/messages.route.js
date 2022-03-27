@@ -1,31 +1,37 @@
 import express from "express";
 import MensajeDaoMongoDb from "../daos/messages.js";
-import { normalize, schema } from "normalizr";
-
-const user = new schema.Entity("users", {
-  id: { type: String, required: true },
-  name: { type: String, required: true },
-  lastname: { type: String, required: true },
-  age: { type: String, required: true },
-  avatar: { type: String, required: true },
-  alias: { type: String, required: true },
-});
-
-const message = new schema.Entity("messages", {
-  user: { type: user, required: true },
-  message: { type: String, required: true },
-  id: { type: String, required: true },
-  _id: { type: String, required: true },
-  __v: { type: String, required: true },
-});
+import { normalize, schema, denormalize } from "normalizr";
 
 const messageRoute = express.Router();
-
 const container = new MensajeDaoMongoDb();
 
+const user = new schema.Entity("user", {}, { idAttribute: "email" });
+const message = new schema.Entity("message", { author: user }, { idAttribute: "_id" });
+
 messageRoute.get("/", async (req, res) => {
-  const messages = await container.findAll();
+  let messages = await container.findAll();
+  const messagesString = JSON.stringify(messages);
+  messages = await JSON.parse(messagesString);
+
   const normalizedData = normalize(messages, [message]);
+  const denormalizedData = await denormalize(
+    normalizedData.result,
+    [message],
+    normalizedData.entities
+  );
+
+  //console.log(denormalizedData);
+
+   console.log("Longitud objeto original: ", JSON.stringify(messages).length);
+  console.log(
+    "Longitud objeto normalizado: ",
+    JSON.stringify(normalizedData).length
+  );
+  console.log(
+    "Longitud objeto desnormalizado: ",
+    JSON.stringify(denormalizedData).length
+  ); 
+
   res.status(200).json(normalizedData);
 });
 
